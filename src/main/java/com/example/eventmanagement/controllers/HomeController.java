@@ -304,5 +304,25 @@ public class HomeController {
         return "utilisateur/profileparticipant"; // Retourne la vue HTML correspondante
     }
 
+    @GetMapping("/utilisateur/prestataire/demandes")
+    public String getDemandesForPrestataire(HttpSession session, Model model) {
+        // Récupérer l'ID du prestataire connecté
+        Long prestataireId = (Long) session.getAttribute("prestataireId");
 
+        if (prestataireId == null) {
+            return "redirect:/Login"; // Rediriger vers la page de connexion si non connecté
+        }
+
+        // Récupérer le prestataire et ses demandes
+        Prestataire prestataire = prestataireRepository.findById(prestataireId)
+                .orElseThrow(() -> new IllegalArgumentException("Prestataire non trouvé"));
+
+        List<FormulaireDemande> demandes = formulaireDemandeRepository.findByPrestataire(prestataire);
+
+        // Ajouter les demandes au modèle pour l'afficher dans la vue
+        model.addAttribute("prestataire", prestataire);
+        model.addAttribute("demandes", demandes);
+
+        return "utilisateur/demandes_prestataire"; // Vue à créer pour afficher les demandes
+    }
 }

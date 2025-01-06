@@ -2,13 +2,94 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Liste des demandes</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .return-button {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .return-button button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .return-button button:hover {
+            background-color: #2980b9;
+        }
+
+        div[th\\:if] p {
+                         color: #e74c3c;
+                         font-weight: bold;
+                         text-align: center;
+                     }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table thead th {
+            background-color: #34495e;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table tbody td {
+            color: #555;
+        }
+
+    </style>
 </head>
 <body>
 <h1>Liste des demandes</h1>
-<div th:if="${errorMessage}">
-    <p th:text="${errorMessage}" style="color: red;"></p>
+
+<div class="return-button">
+    <button onclick="window.history.back()">Retour</button>
 </div>
-<table border="1">
+
+<div th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<table>
     <thead>
     <tr>
         <th>ID</th>
