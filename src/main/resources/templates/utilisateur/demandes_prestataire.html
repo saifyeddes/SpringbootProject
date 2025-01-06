@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demandes d'événements</title>
+</head>
+<body>
+<h1>Demandes d'événements</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Participant</th>
+        <th>Type d'espace</th>
+        <th>Capacité</th>
+        <th>Date de demande</th>
+        <th>Statut</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="demande : ${demandes}">
+        <td th:text="${demande.id}"></td>
+        <td th:text="${demande.participant.nom}"></td>
+        <td th:text="${demande.typeEspace}"></td>
+        <td th:text="${demande.capacite}"></td>
+        <td th:text="${demande.dateDemande}"></td>
+        <td th:text="${demande.status}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

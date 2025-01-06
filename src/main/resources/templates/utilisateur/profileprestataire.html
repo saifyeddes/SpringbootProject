@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Prestataire</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #FA8072; /* Couleur saumon */
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            margin: 20px 0;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            display: block;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .menu a:hover {
+            background-color: #FF6347; /* Couleur saumon plus foncée pour le survol */
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        section {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Toutes les sections sont masquées par défaut */
+        }
+
+        section.active {
+            display: block; /* La section active est visible */
+        }
+
+        h2 {
+            color: #FA8072; /* Titres avec la couleur saumon */
+        }
+
+        form button {
+            margin-top: 15px;
+            background-color: #FA8072; /* Bouton principal */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #FF6347; /* Survol du bouton */
+        }
+        .ui-btn {
+            --btn-default-bg: rgb(41, 41, 41);
+            --btn-padding: 15px 20px;
+            --btn-hover-bg: rgb(51, 51, 51);
+            --btn-transition: .3s;
+            --btn-letter-spacing: .1rem;
+            --btn-animation-duration: 1.2s;
+            --btn-shadow-color: rgba(0, 0, 0, 0.137);
+            --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
+            --hover-btn-color: #FAC921;
+            --default-btn-color: #fff;
+            --font-size: 16px;
+            /* 👆 this field should not be empty */
+            --font-weight: 600;
+            --font-family: Menlo,Roboto Mono,monospace;
+            /* 👆 this field should not be empty */
+        }
+
+        /* button settings 👆 */
+
+        .ui-btn {
+            box-sizing: border-box;
+            padding: var(--btn-padding);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--default-btn-color);
+            font: var(--font-weight) var(--font-size) var(--font-family);
+            background: var(--btn-default-bg);
+            border: none;
+            cursor: pointer;
+            transition: var(--btn-transition);
+            overflow: hidden;
+            box-shadow: var(--btn-shadow);
+        }
+
+        .ui-btn span {
+            letter-spacing: var(--btn-letter-spacing);
+            transition: var(--btn-transition);
+            box-sizing: border-box;
+            position: relative;
+            background: inherit;
+        }
+
+        .ui-btn span::before {
+            box-sizing: border-box;
+            position: absolute;
+            content: "";
+            background: inherit;
+        }
+
+        .ui-btn:hover, .ui-btn:focus {
+            background: var(--btn-hover-bg);
+        }
+
+        .ui-btn:hover span, .ui-btn:focus span {
+            color: var(--hover-btn-color);
+        }
+
+        .ui-btn:hover span::before, .ui-btn:focus span::before {
+            animation: chitchat linear both var(--btn-animation-duration);
+        }
+
+        @keyframes chitchat {
+            0% {
+                content: "#";
+            }
+
+            5% {
+                content: ".";
+            }
+
+            10% {
+                content: "^{";
+            }
+
+            15% {
+                content: "-!";
+            }
+
+            20% {
+                content: "#$_";
+            }
+
+            25% {
+                content: "№:0";
+            }
+
+            30% {
+                content: "#{+.";
+            }
+
+            35% {
+                content: "@}-?";
+            }
+
+            40% {
+                content: "?{4@%";
+            }
+
+            45% {
+                content: "=.,^!";
+            }
+
+            50% {
+                content: "?2@%";
+            }
+
+            55% {
+                content: "\;1}]";
+            }
+
+            60% {
+                content: "?{%:%";
+                right: 0;
+            }
+
+            65% {
+                content: "|{f[4";
+                right: 0;
+            }
+
+            70% {
+                content: "{4%0%";
+                right: 0;
+            }
+
+            75% {
+                content: "'1_0<";
+                right: 0;
+            }
+
+            80% {
+                content: "{0%";
+                right: 0;
+            }
+
+            85% {
+                content: "]>'";
+                right: 0;
+            }
+
+            90% {
+                content: "4";
+                right: 0;
+            }
+
+            95% {
+                content: "2";
+                right: 0;
+            }
+
+            100% {
+                content: "";
+                right: 0;
+            }
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            border-radius: 6px;
+            padding: 30px;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .container header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .input-field {
+            width: calc(50% - 15px);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .input-field label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-field input,
+        .input-field select {
+            height: 40px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        /* From Uiverse.io by Yaya12085 */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 28px;
+            color: #f40000;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+        }
+
+        .title::before,.title::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: #ef13c4;
+        }
+
+        .title::before {
+            width: 18px;
+            height: 18px;
+            background-color: #ef0519;
+        }
+
+        .title::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
+
+        .message, .signin {
+            color: rgba(88, 87, 87, 0.822);
+            font-size: 14px;
+        }
+
+        .signin {
+            text-align: center;
+        }
+
+        .signin a {
+            color: royalblue;
+        }
+
+        .signin a:hover {
+            text-decoration: underline royalblue;
+        }
+
+        .flex {
+            display: flex;
+            width: 100%;
+            gap: 6px;
+        }
+
+        .form label {
+            position: relative;
+        }
+
+        .form label .input {
+            width: 100%;
+            padding: 10px 10px 20px 10px;
+            outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 10px;
+        }
+
+        .form label .input + span {
+            position: absolute;
+            left: 10px;
+            top: 15px;
+            color: grey;
+            font-size: 0.9em;
+            cursor: text;
+            transition: 0.3s ease;
+        }
+
+        .form label .input:placeholder-shown + span {
+            top: 15px;
+            font-size: 0.9em;
+        }
+
+        .form label .input:focus + span,.form label .input:valid + span {
+            top: 30px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        .form label .input:valid + span {
+            color: green;
+        }
+
+        .submit {
+            border: none;
+            outline: none;
+            background-color: #c50c0c;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+
+        }
+
+        .submit:hover {
+            background-color: rgb(217, 13, 225);
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(0.9);
+                opacity: 1;
+            }
+
+            to {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+        .box-container {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .box {
+            height: 130px;
+            width: 230px;
+            border-radius: 20px;
+            box-shadow: 3px 3px 10px rgba(0, 30, 87, 0.751);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .box:hover {
+            transform: scale(1.08);
+        }
+
+        .box:nth-child(1) {
+            background-color: var(--one-use-color);
+        }
+        .box:nth-child(2) {
+            background-color: var(--two-use-color);
+        }
+        .box:nth-child(3) {
+            background-color: var(--one-use-color);
+        }
+        .box:nth-child(4) {
+            background-color: var(--two-use-color);
+        }
+
+        .box img {
+            height: 50px;
+        }
+        .box .text {
+            color: white;
+        }
+        .topic {
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .topic-heading {
+            font-size: 20px;
+            letter-spacing: 3px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo">YoYo InspireSpace</div>
+        <nav class="menu">
+            <ul>
+                <li><a onclick="showSection('dashbord')">Dashboard</a></li>
+                <li><a onclick="showSection('gerer-compte')">Manage Account</a></li>
+                <li><a onclick="showSection('ajouter-espace')">Manage Space</a></li>
+                <li><a onclick="showSection('gerer-photos')">Manage Events</a></li>
+                <li><a href="/utilisateur/prestataire/gererphotos">Manage Pictures</a></li>
+
+
+                <li><a href="/Login">Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="content">
+        <header>
+            <h1>Welcome, <span th:text="${session.prestataireNom}"></span></h1>
+
+        </header>
+        <section id="dashbord">
+        <div class="box-container">
+
+            <div class="box box1">
+                <div class="text">
+                    <h2 class="topic-heading">03</h2>
+                    <h2 class="topic">Total Customers</h2>
+                </div>
+
+                <img src=
+                             "https://cdn-icons-png.flaticon.com/512/6009/6009864.png"
+                     alt="Views">
+            </div>
+
+            <div class="box box2">
+                <div class="text">
+                    <h2 class="topic-heading">00</h2>
+                    <h2 class="topic">Total spaces</h2>
+                </div>
+
+                <img src=
+                             "https://cdn0.iconfinder.com/data/icons/coffee-25/436/coffee_60-1024.png"
+                     alt="likes">
+            </div>
+
+            <div class="box box3">
+                <div class="text">
+                    <h2 class="topic-heading">00</h2>
+                    <h2 class="topic">Total Events</h2>
+                </div>
+
+                <img src=
+                                 "https://static.vecteezy.com/system/resources/previews/016/314/814/non_2x/transparent-event-schedule-icon-free-png.png"
+                     alt="comments">
+            </div>
+
+
+        </div>
+            <div id="calendar" style="margin-top: 20px;"></div>
+        </section>
+
+
+
+        <section id="ajouter-espace">
+            <h2>Add a Espace</h2>
+            <div class="container">
+                <header>Add Your Space</header>
+                <form th:action="@{/utilisateur/prestataire/registerespace}" th:object="${espaceEvenement}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{prestataire.id}" />
+
+                    <div class="fields">
+                        <!-- Informations générales -->
+                        <div class="input-field">
+                            <label>Full Name</label>
+                            <input type="text" th:field="${espaceEvenement.nomComplet}" placeholder="Entrez le nom complet" required />
+                        </div>
+
+
+
+                        <div class="input-field">
+                            <label>Space Type</label>
+                            <select th:field="*{typeEspace}" required>
+                                <option value="cafe">Cafe</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="salle">Banquet Hall</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Capacity (number of people)</label>
+                            <input type="number" th:field="*{capacite}" placeholder="Capacity" required />
+                        </div>
+
+                        <!-- Services et coûts -->
+                        <div class="input-field">
+                            <label>Decoration (Price per person)</label>
+                            <input type="number" th:field="*{prixDecoration}" placeholder="Decoration price" required />
+                        </div>
+                        <div class="input-field">
+                            <label>Photography  (Price per person)</label>
+                            <input type="number" th:field="*{prixPhotographie}" placeholder="Photography price" required />
+                        </div>
+                        <div class="input-field">
+                            <label>Boissons (Prix par personne)</label>
+                            <input type="number" th:field="*{prixBoissons}" placeholder="Drinks price" required />
+                        </div>
+                        <div class="input-field">
+                            <label>Buffet (Price per person)</label>
+                            <input type="number" th:field="*{prixBuffet}" placeholder="Buffet price" required />
+                        </div>
+                        <div class="input-field">
+                            <label>Adress (Adress)</label>
+                            <input type="text" th:field="*{adresseComplete}" placeholder="Adress" required />
+                        </div>
+
+                        <!-- Champ pour nombre de personnes et coût total -->
+                        <div class="input-field">
+                            <label>Number of People</label>
+                            <input type="number" id="nombrePersonnes" placeholder="Number of people" required />
+                        </div>
+                        <div class="input-field">
+                            <label>Total Cost</label>
+                            <input type="text" id="coutTotal" placeholder="Total cost" readonly />
+                        </div>
+
+                        <div class="input-field">
+                            <label>Upload Images</label>
+                            <input type="file" name="imageFiles" multiple required />
+                        </div>
+
+
+                    </div>
+
+                    <button type="submit">Submit</button>
+                </form>
+                <div th:if="${images != null and not #lists.isEmpty(images)}" style="margin-top: 20px;">
+                    <h3>Uploaded Images</h3>
+                    <div th:each="image : ${images}" style="display: inline-block; margin: 10px;">
+                        <img th:src="'data:image/jpeg;base64,' + ${image.data}" alt="Image d'espace" style="width: 150px; height: 150px;">
+                    </div>
+                </div>
+                <div th:if="${#lists.isEmpty(images)}">
+                    <p>No photos available at the moment.</p>
+                </div>
+            </div>
+            <script>
+                function calculerCoutTotal() {
+                    const n = parseInt(document.getElementById('nombrePersonnes').value) || 0;
+                    const prixDecoration = parseFloat(document.getElementById('prixDecoration').value) || 0;
+                    const prixPhotographie = parseFloat(document.getElementById('prixPhotographie').value) || 0;
+                    const prixBoissons = parseFloat(document.getElementById('prixBoissons').value) || 0;
+                    const prixBuffet = parseFloat(document.getElementById('prixBuffet').value) || 0;
+
+                    const total = n * (prixDecoration + prixPhotographie + prixBoissons + prixBuffet);
+                    document.getElementById('coutTotal').value = total.toFixed(2) + " TND";
+                }
+
+                // Ajouter des écouteurs d'événements pour recalculer à chaque modification
+                document.getElementById('nombrePersonnes').addEventListener('input', calculerCoutTotal);
+                document.getElementById('prixDecoration').addEventListener('input', calculerCoutTotal);
+                document.getElementById('prixPhotographie').addEventListener('input', calculerCoutTotal);
+                document.getElementById('prixBoissons').addEventListener('input', calculerCoutTotal);
+                document.getElementById('prixBuffet').addEventListener('input', calculerCoutTotal);
+            </script>
+
+        </section>
+
+        <section id="gerer-compte">
+            <form method="post" action="/utilisateur/prestataire/update" class="form">
+                <p class="title">Modify your account</p>
+                <p class="message">Modify your information</p>
+
+                <div class="flex">
+                    <label>
+                        <input required type="text" class="input" name="name" value="${prestataire.name}">
+                        <span>Name</span>
+                    </label>
+                    <label>
+                        <input required type="text" class="input" name="localName" value="${prestataire.localName}">
+                        <span>Local Name</span>
+                    </label>
+                </div>
+
+                <div class="flex">
+                    <label>
+                        <input required type="email" class="input" name="email" value="${prestataire.email}">
+                        <span>Email</span>
+                    </label>
+                    <label>
+                        <input type="text" class="input" name="localAddress" value="${prestataire.localAddress}">
+                        <span>Local Address</span>
+                    </label>
+                </div>
+
+                <div class="flex">
+                    <label>
+                        <input required type="tel" class="input" name="phoneNumber" value="${prestataire.phoneNumber}">
+                        <span>Phone Number</span>
+                    </label>
+                    <label>
+                        <input type="password" class="input" name="password">
+                        <span>New Password</span>
+                    </label>
+                </div>
+
+                <label>
+                    <input type="password" class="input" name="confirmPassword">
+                    <span>Confirm New Password</span>
+                </label>
+
+                <button class="submit">Submit</button>
+            </form>
+
+
+
+        </section>
+
+
+        <!-- Section Gérer les Photos -->
+        <section id="gerer-photos">
+            <h2>Manage Photos</h2>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="/utilisateur/prestataire/gererphotos">Access photo management</a>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth', // Vue mensuelle
+            headerToolbar: {
+                left: 'prev,next today', // Boutons navigation
+                center: 'title', // Titre du mois
+                right: 'dayGridMonth,timeGridWeek,timeGridDay' // Choix de la vue
+            },
+            events: [
+                // Vous pouvez ajouter des événements ici si nécessaire
+                {
+                    title: 'Événement Exemple',
+                    start: '2024-12-10',
+                    end: '2024-12-12'
+                },
+                {
+                    title: 'Autre Événement',
+                    start: '2024-12-15'
+                }
+            ]
+        });
+
+        calendar.render();
+    });
+
+    function showSection(sectionId) {
+        // Masquer toutes les sections
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => section.classList.remove('active'));
+
+        // Afficher la section sélectionnée
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.classList.add('active');
+        }
+    }
+
+    // Afficher le tableau de bord par défaut lors du chargement de la page
+    document.addEventListener('DOMContentLoaded', () => {
+        showSection('dashbord');
+    });
+
+</script>
+
+
+</body>
+</html>

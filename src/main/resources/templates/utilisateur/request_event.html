@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demander un Événement</title>
+    <link rel="stylesheet">
+    <style>body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    header {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 1em 2em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        margin: 0;
+    }
+
+    header ul {
+        list-style: none;
+        display: flex;
+        gap: 1em;
+        margin: 0;
+        padding: 0;
+    }
+
+    header ul li {
+        margin: 0;
+    }
+
+    header ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    header ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 3em auto;
+        padding: 2em;
+        background-color: #EADDCA;
+        border: 2px dashed #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h2 {
+        color: #000000;
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    .form-group {
+        margin-bottom: 1.5em;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5em;
+        color: #000000;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8em;
+        border: 1px solid #000000;
+        border-radius: 10px;
+        background-color: #fdfdfd;
+        color: #000000;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #000000;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .submit-btn,
+    .return-btn {
+        padding: 0.8em 1.5em;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        color: white;
+        background-color: #000000;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover,
+    .return-btn:hover {
+        background-color: #000000;
+    }
+
+    .return-btn {
+        background-color: #888888;
+    }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <h1>Demander un Événement</h1>
+    </nav>
+</header>
+
+<section>
+    <div class="container">
+        <h2>Formulaire de Demande d'Événement</h2>
+        <form th:action="@{/utilisateur/request-event}" method="post">
+            <!-- Champs cachés pour l'ID espace et prestataire -->
+            <input type="hidden" name="espaceId" th:value="${espaceId}">
+            <input type="hidden" name="prestataireId" th:value="${prestataireId}">
+
+            <div class="form-group">
+                <label for="eventName">Nom de l'événement</label>
+                <input type="text" id="eventName" name="eventName" required placeholder="Entrez le nom de l'événement">
+            </div>
+
+            <div class="form-group">
+                <label for="eventDate">Date de l'événement</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventType">Type d'événement</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="Birthday">Anniversaire</option>
+                    <option value="Wedding">Mariage</option>
+                    <option value="Conference">Conférence</option>
+                    <option value="Evening">Soirée</option>
+                    <option value="Other">Autre</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDetails">Détails supplémentaires</label>
+                <textarea id="eventDetails" name="eventDetails" placeholder="Détails ou demandes particulières" rows="4"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Envoyer la demande</button>
+                <button type="button" class="return-btn" onclick="history.back()">Retour</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== Google Font Import - Poppins ===== -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <title>Prestataire Registration</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .card {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 600px;
+            padding: 20px;
+            background: #e3e3e3;
+            box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
+            border-radius: 8px;
+        }
+
+        .form-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 45%;
+        }
+
+        .singup {
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            font-weight: bold;
+            font-size: x-large;
+            margin-top: 1.5em;
+        }
+
+        .inputBox,
+        .inputBox1 {
+            position: relative;
+            width: 80%;
+        }
+
+        .inputBox input,
+        .inputBox1 input {
+            width: 100%;
+            padding: 10px;
+            outline: none;
+            border: none;
+            color: #000;
+            font-size: 1em;
+            background: transparent;
+            border-left: 2px solid #000;
+            border-bottom: 2px solid #000;
+            transition: 0.1s;
+            border-bottom-left-radius: 8px;
+        }
+
+        .inputBox span,
+        .inputBox1 span {
+            position: absolute;
+            left: 0;
+            bottom: -18px;
+            margin-left: 10px;
+            padding: 10px;
+            pointer-events: none;
+            font-size: 12px;
+            color: #000;
+            text-transform: uppercase;
+            transition: 0.5s;
+            letter-spacing: 3px;
+            border-radius: 8px;
+        }
+
+        .inputBox input:valid~span,
+        .inputBox input:focus~span,
+        .inputBox1 input:valid~span,
+        .inputBox1 input:focus~span {
+            transform: translateY(0);
+            font-size: 0.8em;
+            padding: 5px 10px;
+            background: #000;
+            letter-spacing: 0.2em;
+            color: #fff;
+            border: 2px;
+        }
+
+        .inputBox input:valid,
+        .inputBox input:focus,
+        .inputBox1 input:valid,
+        .inputBox1 input:focus {
+            border: 2px solid #000;
+            border-radius: 8px;
+        }
+
+        .enter {
+            height: 45px;
+            width: 100px;
+            border-radius: 5px;
+            border: 2px solid #000;
+            cursor: pointer;
+            background-color: transparent;
+            transition: 0.5s;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 3em;
+        }
+
+        .enter:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+
+        .retour {
+            height: 45px;
+            width: 100px;
+            border-radius: 5px;
+            border: 2px solid #000;
+            cursor: pointer;
+            background-color: transparent;
+            transition: 0.5s;
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .retour:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <header class="singup">Prestataire Registration</header>
+
+    <form th:action="@{/utilisateur/prestataire/register}" th:object="${prestataire}" method="post" enctype="multipart/form-data">
+        <div class="card">
+            <!-- Colonne 1 : Informations de base -->
+            <div class="form-column">
+                <div class="inputBox">
+                    <input id="name" type="text" th:field="*{name}" placeholder="Enter your name" required>
+                    <span>Full Name</span>
+                </div>
+
+                <div class="inputBox">
+                    <input id="email" type="email" th:field="*{email}" placeholder="Enter your email" required>
+                    <span>Email</span>
+                </div>
+
+                <div class="inputBox">
+                    <input id="phoneNumber" type="text" th:field="*{phoneNumber}" placeholder="Enter mobile number" required>
+                    <span>Mobile Number</span>
+                </div>
+
+                <div class="inputBox">
+                    <input id="role" type="hidden" th:field="*{role}" value="Prestataire" required>
+                    <span></span> <!-- Vous pouvez enlever cette ligne si vous ne voulez pas afficher le label -->
+                </div>
+            </div>
+
+            <!-- Colonne 2 : Informations supplémentaires -->
+            <div class="form-column">
+                <div class="inputBox">
+                    <input id="localAddress" type="text" th:field="*{localAddress}" placeholder="Enter your local address" required>
+                    <span>Local Address</span>
+                </div>
+
+                <div class="inputBox">
+                    <input id="password" type="password" th:field="*{password}" placeholder="Enter your password" required>
+                    <span>Password</span>
+                </div>
+
+                <div class="inputBox">
+                    <input id="localName" type="text" th:field="*{localName}" placeholder="Enter your local name" required>
+                    <span>Local Name</span>
+                </div>
+
+                <div class="button-group">
+                    <button class="retour" type="button" onclick="window.history.back();">Back</button>
+                    <button class="enter" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

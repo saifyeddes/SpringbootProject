@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== Google Font Import - Poppins ===== -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <title>Participant Registration</title>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .singup {
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            font-weight: bold;
+            font-size: x-large;
+            margin-top: 1.5em;
+        }
+
+        .card {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Change to align from the top */
+            min-height: 450px; /* Increase height */
+            width: 400px; /* Increase width */
+            flex-direction: column;
+            gap: 25px; /* Space between form fields */
+            border-radius: 15px;
+            background: #e3e3e3;
+            box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
+            border-radius: 8px;
+            padding: 30px; /* Add padding inside the card */
+        }
+
+        .inputBox {
+            position: relative;
+            width: 100%; /* Use full width of card */
+            margin-bottom: 20px; /* Add space below each input field */
+        }
+
+        .inputBox input {
+            width: 100%;
+            padding: 12px; /* Increase padding for larger input fields */
+            outline: none;
+            border: none;
+            color: #000;
+            font-size: 1em;
+            background: transparent;
+            border-left: 2px solid #000;
+            border-bottom: 2px solid #000;
+            transition: 0.1s;
+            border-radius: 8px;
+        }
+
+        .inputBox span {
+            margin-top: 5px;
+            position: absolute;
+            left: 0;
+            transform: translateY(-4px);
+            margin-left: 10px;
+            padding: 10px;
+            pointer-events: none;
+            font-size: 12px;
+            color: #000;
+            text-transform: uppercase;
+            transition: 0.5s;
+            letter-spacing: 3px;
+            border-radius: 8px;
+        }
+
+        .inputBox input:valid~span,
+        .inputBox input:focus~span {
+            transform: translateX(113px) translateY(-15px);
+            font-size: 0.8em;
+            padding: 5px 10px;
+            background: #000;
+            letter-spacing: 0.2em;
+            color: #fff;
+        }
+
+        .inputBox input:valid,
+        .inputBox input:focus {
+            border: 2px solid #000;
+            border-radius: 8px;
+        }
+
+        .enter {
+            height: 50px;
+            width: 120px; /* Increase button size */
+            border-radius: 5px;
+            border: 2px solid #000;
+            cursor: pointer;
+            background-color: transparent;
+            transition: 0.5s;
+            text-transform: uppercase;
+            font-size: 12px; /* Increase font size */
+            letter-spacing: 2px;
+            margin-top: 20px; /* Add space above the button */
+        }
+
+        .enter:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+
+    </style>
+<body>
+<div class="card">
+    <header class="singup">Participant Registration</header>
+    <form th:action="@{/utilisateur/participant/register}" th:object="${participant}" method="post">
+        <div class="inputBox">
+            <input type="text" th:field="*{nom}" placeholder="Enter your name" required>
+            <span>Full Name</span>
+        </div>
+        <div class="inputBox">
+            <input type="text" th:field="*{prenom}" placeholder="Enter your first name" required>
+            <span>First Name</span>
+        </div>
+        <div class="inputBox">
+            <input type="email" th:field="*{email}" placeholder="Enter your email" required>
+            <span>Email</span>
+        </div>
+        <div class="inputBox">
+            <input type="text" th:field="*{numTelephone}" placeholder="Enter mobile number" required>
+            <span>Mobile Number</span>
+        </div>
+        <div class="inputBox">
+            <input type="password" th:field="*{password}" placeholder="Enter your password" required>
+            <span>Password</span>
+        </div>
+        <button type="submit" class="enter">
+            <span class="btnText">Submit</span>
+
+        </button>
+        <button class="enter" type="button" onclick="window.history.back()">Back</button>
+
+    </form>
+</div>
+</body>
+
+
+</html>
