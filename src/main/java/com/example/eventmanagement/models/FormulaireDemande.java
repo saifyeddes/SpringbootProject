@@ -84,4 +84,8 @@ public class FormulaireDemande {
     public void setEspaceEvenement(EspaceEvenement espace) {
         this.espaceEvenement = espace;
     }
+
+    public Prestataire getPrestataire() {
+        return prestataire;
+    }
 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Demandes</title>
+    <style>body {
+        font-family: 'Poppins', Arial, sans-serif;
+        background-color: #fff5f0; /* Fond saumon clair */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        color: #d35400; /* Saumon foncé */
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    table {
+        width: 90%;
+        max-width: 1000px;
+        border-collapse: collapse;
+        background: #ffe6e1; /* Saumon très clair */
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+    }
+
+    thead {
+        background: #d35400; /* Saumon foncé */
+        color: white;
+    }
+
+    thead th {
+        padding: 15px;
+        text-align: left;
+        text-transform: uppercase;
+        font-size: 0.9em;
+    }
+
+    tbody tr {
+        transition: background 0.3s ease;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: #ffe6e1; /* Saumon clair */
+    }
+
+    tbody tr:nth-child(even) {
+        background: #fffdfc; /* Blanc cassé */
+    }
+
+    tbody tr:hover {
+        background: #ffd2c1; /* Saumon légèrement plus foncé */
+    }
+
+    tbody td {
+        padding: 15px;
+        text-align: left;
+        font-size: 0.9em;
+        color: #333;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #d35400; /* Bouton saumon foncé */
+        color: white;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9em;
+        transition: background 0.3s ease;
+    }
+
+    a:hover {
+        background: #a13b00; /* Saumon plus sombre */
+    }
+    </style>
+</head>
+<body>
+<h1>My Requests</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Space</th>
+        <th>Space Type</th>
+        <th>Date of request</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="demande : ${demandes}">
+        <tr>
+            <td th:text="${demande.id}"></td>
+            <td th:text="${demande.status}"></td>
+            <td th:text="${demande.typeEspace}"></td>
+            <td th:text="${demande.dateDemande}"></td>
+            <td th:text="${demande.status}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<button class="enter" type="button" onclick="window.history.back()">Back</button>
+</body>
+</html>

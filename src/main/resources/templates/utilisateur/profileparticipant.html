@@ -2,131 +2,161 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Participant</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #002B36; /* Couleur de fond */
             font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #495057;
         }
 
-        .return-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #ff7a01;
-            padding: 10px 20px;
-            color: #001925;
-            font-weight: bold;
-            text-decoration: none;
-            border: 1px solid transparent;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .return-button:hover {
-            background-color: transparent;
-            border: 1px solid #ff7a01;
-            color: #ff7a01;
-        }
-
-        .form-container {
-            max-width: 700px;
-            background-color: #073642;
-            padding: 30px;
-            border-left: 5px solid #2AA198;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-            text-align: center;
-        }
-
-        .heading {
-            display: block;
-            color: #FFFFFF;
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .input {
-            color: #FFFFFF;
-            width: 100%;
-            background-color: #002B36;
-            border: none;
-            outline: none;
-            padding: 10px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            border-left: 3px solid transparent;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .input:focus {
-            border-left: 5px solid #2AA198;
-        }
-
-        .button-container {
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
             display: flex;
-            gap: 10px;
-            justify-content: center;
+            gap: 20px;
         }
 
-        .send-button {
-            flex-basis: 70%;
-            background: #2AA198;
-            padding: 10px;
-            color: #001925;
-            text-align: center;
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .card-header {
+            background-color: #FF6347;
+            color: #fff;
+            padding: 15px;
+            font-size: 18px;
             font-weight: bold;
-            border: 1px solid transparent;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .send-button:hover {
-            background: transparent;
-            border: 1px solid #2AA198;
-            color: #2AA198;
-        }
-
-        .reset-button-container {
-            filter: drop-shadow(1px 1px 0px #2AA198);
-            flex-basis: 30%;
-        }
-
-        .reset-button {
             text-align: center;
-            padding: 10px;
-            color: #2AA198;
-            font-weight: bold;
-            background: #073642;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-            transition: all 0.3s ease-in-out;
         }
 
-        .reset-button:hover {
-            background: #2AA198;
-            color: #001925;
+        .card-body {
+            padding: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .img-account-profile {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #FF6347;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #FF6347;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
         }
     </style>
 </head>
 <body>
-<!-- Bouton de retour -->
-<a href="/utilisateur/home" class="return-button">Back</a>
+<div class="container">
+    <!-- Profile Picture Section -->
+    <div class="card">
+        <div class="card-header">Photo de profil</div>
+        <div class="card-body text-center">
+            <img class="img-account-profile" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="Profil">
+            <p class="small text-muted">JPG ou PNG, taille maximale de 5 Mo</p>
+            <button class="btn" type="button">Télécharger une image</button>
+        </div>
+    </div>
 
-<div class="form-container">
-    <div class="form">
-        <span class="heading">Update your Profile</span>
-        <input placeholder="First Name" type="text" class="input">
-        <input placeholder="Last Name" type="text" class="input">
-        <input placeholder="Email" id="mail" type="email" class="input">
-        <div class="button-container">
-            <div class="send-button">Update</div>
-            <div class="reset-button-container">
-                <div id="reset-btn" class="reset-button">Reset</div>
-            </div>
+    <!-- Account Details Section -->
+    <div class="card">
+        <div class="card-header">Détails du compte</div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label for="inputUsername">Nom d'utilisateur</label>
+                    <input class="form-control" id="inputUsername" type="text" placeholder="Entrez votre nom d'utilisateur" value="username">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputFirstName">Prénom</label>
+                        <input class="form-control" id="inputFirstName" type="text" placeholder="Entrez votre prénom" value="Valerie">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLastName">Nom</label>
+                        <input class="form-control" id="inputLastName" type="text" placeholder="Entrez votre nom" value="Luna">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputOrgName">Organisation</label>
+                        <input class="form-control" id="inputOrgName" type="text" placeholder="Nom de votre organisation" value="Start Bootstrap">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLocation">Localisation</label>
+                        <input class="form-control" id="inputLocation" type="text" placeholder="Votre localisation" value="San Francisco, CA">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmailAddress">Adresse e-mail</label>
+                    <input class="form-control" id="inputEmailAddress" type="email" placeholder="Entrez votre adresse e-mail" value="name@example.com">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inputPhone">Numéro de téléphone</label>
+                        <input class="form-control" id="inputPhone" type="tel" placeholder="Entrez votre numéro de téléphone" value="555-123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBirthday">Date de naissance</label>
+                        <input class="form-control" id="inputBirthday" type="date" value="1988-06-10">
+                    </div>
+                </div>
+                <button class="btn" type="button">Sauvegarder les modifications</button>
+            </form>
         </div>
     </div>
 </div>

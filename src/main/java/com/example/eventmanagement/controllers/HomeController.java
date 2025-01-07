@@ -325,4 +325,48 @@ public class HomeController {
 
         return "utilisateur/demandes_prestataire"; // Vue à créer pour afficher les demandes
     }
+    @PostMapping("/utilisateur/prestataire/confirm")
+    public String confirmDemande(@RequestParam("demandeId") Long demandeId, HttpSession session) {
+        // Vérifier si le prestataire est connecté
+        Long prestataireId = (Long) session.getAttribute("prestataireId");
+        if (prestataireId == null) {
+            return "redirect:/Login"; // Redirection si non connecté
+        }
+
+        // Trouver la demande et vérifier que le prestataire correspond
+        FormulaireDemande demande = formulaireDemandeRepository.findById(demandeId)
+                .orElseThrow(() -> new IllegalArgumentException("Demande non trouvée"));
+        if (!demande.getPrestataire().getId().equals(prestataireId)) {
+            throw new IllegalArgumentException("Accès non autorisé");
+        }
+
+        // Mettre à jour le statut de la demande
+        demande.setStatus("Confirmé");
+        formulaireDemandeRepository.save(demande);
+
+        // Envoyer un message de confirmation au participant
+        Participant participant = demande.getParticipant();
+
+        return "redirect:/utilisateur/prestataire/demandes";
+    }
+    @GetMapping("/utilisateur/mes-demandes")
+    public String consulterDemandes(HttpSession session, Model model) {
+        // Récupérer l'ID du participant depuis la session
+        Long participantId = (Long) session.getAttribute("participantId");
+        if (participantId == null) {
+            throw new IllegalArgumentException("Participant non connecté");
+        }
+
+        // Récupérer le participant
+        Participant participant = participantRepository.findById(participantId)
+                .orElseThrow(() -> new IllegalArgumentException("Participant non trouvé"));
+
+        // Récupérer les demandes du participant
+        List<FormulaireDemande> demandes = formulaireDemandeRepository.findByParticipant(participant);
+
+        // Ajouter les demandes au modèle
+        model.addAttribute("demandes", demandes);
+
+        return "utilisateur/mes-demandes"; // Vue pour afficher les demandes
+    }
 }

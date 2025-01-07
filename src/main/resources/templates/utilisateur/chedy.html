@@ -222,14 +222,14 @@
     </div>
 
     <!-- Search bar -->
-    <div class="search-bar">
-        <input
-                type="text"
-                id="searchInput"
-                class="search-input"
-                placeholder="Search by space name..."
-                onkeyup="filterEspaces()">
-    </div>
+    <section>
+        <form action="/search-prestataires" method="GET">
+            <div>
+                <input type="text" name="nom" placeholder="Rechercher par nom"/>
+            </div>
+            <button type="submit">Rechercher</button>
+        </form>
+    </section>
 
     <h2>Available Spaces</h2>
     <ul id="espaceList">

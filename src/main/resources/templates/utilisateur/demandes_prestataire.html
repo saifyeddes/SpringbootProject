@@ -101,20 +101,21 @@
 <body>
 
 <div class="return-button">
-    <button onclick="window.history.back()">Retour</button>
+    <button onclick="window.history.back()">Back</button>
 </div>
 
-<h1>Demandes d'événements</h1>
+<h1>Event Requests</h1>
 
-<table>
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Participant</th>
-        <th>Type d'espace</th>
-        <th>Capacité</th>
-        <th>Date de demande</th>
-        <th>Statut</th>
+        <th>Customer</th>
+        <th>Type of space</th>
+        <th>Capacity</th>
+        <th>Date of request</th>
+        <th>Status</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -125,10 +126,15 @@
         <td th:text="${demande.capacite}"></td>
         <td th:text="${demande.dateDemande}"></td>
         <td th:text="${demande.status}"></td>
+        <td>
+            <form th:action="@{/utilisateur/prestataire/confirm}" method="post">
+                <input type="hidden" name="demandeId" th:value="${demande.id}">
+                <button type="submit">Confirm</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
-
 </body>
 
 </html>
